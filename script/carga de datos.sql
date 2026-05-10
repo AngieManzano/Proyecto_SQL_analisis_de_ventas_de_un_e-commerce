@@ -51,8 +51,8 @@ select
 	cast(customer_rating AS float) customer_rating,
 	cast(revenue  as float) revenue ,
 	unit_price *quantity total_sales
-into e_commerce_clean
 
+	into e_commerce_clean
 from [dbo].[e_commerce];
 
 
@@ -67,13 +67,3 @@ from e_commerce_clean
 
 
 
-SELECT 
-    COLUMN_NAME AS 'Nombre_de_Columna',
-    DATA_TYPE AS 'Tipo_de_Dato',
-    CHARACTER_MAXIMUM_LENGTH AS 'Longitud_Maxima',
-    IS_NULLABLE AS 'Permite_Nulos'
-FROM 
-    INFORMATION_SCHEMA.COLUMNS
-WHERE 
-    TABLE_NAME = 'e_comeerce' 
-    AND TABLE_SCHEMA = 'dbo';

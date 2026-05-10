@@ -14,8 +14,12 @@
 
 
 */
+
 select *
 from e_commerce_clean
 
-select*
-from prod
+
+--- cual es los orden id que con mayor venta
+SELECT TOP 3*
+FROM [dbo].[e_commerce_clean]
+order by [total_sales] desc;
