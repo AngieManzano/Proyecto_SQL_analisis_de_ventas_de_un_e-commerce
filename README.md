@@ -27,7 +27,8 @@ order_id: Un identificador único para cada pedido.
 - Delivery_days: El número de días que tarda en entregarse el pedido.
 - Customer_rating: La calificación otorgada por el cliente al pedido (en una escala del 1 al 5).
 - Revenue: Los ingresos totales generados por el pedido (calculados como quantity * unit_price * (1 - discount)).
-![Proyecto SQL](./picture/tabla.jpeg)
+
+![Proyecto SQL](./picture/tabla_de_datos.jpeg)
 
 ## Tareas (Task)
 Desafío Analítico: Calcular el ingreso total y la cantidad total de productos vendidos por product_category.
