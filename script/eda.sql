@@ -19,9 +19,11 @@ HAVING COUNT(*) > 1;
 
 
 
+
+
 /*
-1. Rentabilidad por Categoría: ¿Cuales son las 3 categorias de producto con mayores ingresos?
-2.Eficiencia de Logística por Región: ¿cual es el promedio de delivery_days por cada region?
+1. Pregunta #1: ¿Qué línea de producto genera el mayor volumen de efectivo real?
+2
 3.
 4.
 5.
@@ -39,23 +41,30 @@ cual es el metodo de pago mas usado en las compreas
 
 */
 
+--- Pregunta #1: ¿Qué línea de producto genera el mayor volumen de efectivo real y vende mayor cantidad de productos?
+
+SELECT 
+    product_category,
+    SUM(quantity) AS total_units_sold,
+    SUM(revenue) AS total_revenue
+FROM e_commerce_clean
+GROUP BY product_category
+ORDER BY total_revenue DESC;
+
+
+---
+
+
+select top 10*
+FROM [dbo].[e_commerce_clean]
+order by  [revenue] desc
+;
 
 
 
 
 
 
-
-
-
-
-
----¿Qué órdenes superan el tiempo de entrega estándar de la región?
-
-SELECT * FROM (
-  SELECT *, AVG(delivery_days) OVER(PARTITION BY region) as reg_avg
-  FROM e_commerce_clean
-) t WHERE delivery_days > reg_avg
 
 
 

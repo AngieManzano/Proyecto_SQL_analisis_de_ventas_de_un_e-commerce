@@ -27,16 +27,32 @@ order_id: Un identificador único para cada pedido.
 - Delivery_days: El número de días que tarda en entregarse el pedido.
 - Customer_rating: La calificación otorgada por el cliente al pedido (en una escala del 1 al 5).
 - Revenue: Los ingresos totales generados por el pedido (calculados como quantity * unit_price * (1 - discount)).
+- Total_sales: Son los ingresos totales del pedido que consite en la multiplicacion de quantity con unit_price. Sin aplicar el descuento.
 
-![Proyecto SQL](./picture/tabla_de_datos.jpeg)
+![Proyecto SQL](./picture/tabla.jpeg)
 
 ## Tareas (Task)
 
-Rentabilidad por Categoría: ¿Qué línea de producto genera el mayor volumen de efectivo real?
+1. Rentabilidad por Categoría: ¿Qué línea de producto genera el mayor volumen de efectivo real y vende mayor cantidad de productos?
+2. Clientes más activos: ¿Quienes son los 10 clientes que compran la mayor cantidad de productos?
+3.
+4.
+5.
+6.
+7.
+8.
+9.
+10.
+
+
 
 
 ## Limpieza de Datos
 Se tiene que realizar limpieza de datos para que los datos esten limpios y listos antes del analisis. 
+
+![Proyecto SQL](./picture/limpia1.jpeg)
+
+![Proyecto SQL](./picture/limpia2.jpeg)
 
 
 
@@ -46,7 +62,7 @@ Se tiene que realizar limpieza de datos para que los datos esten limpios y listo
 
 ## Análisis Exploratorio de Datos (EDA) e Insights
 
-Pregunta #1: ¿Qué línea de producto genera el mayor volumen de efectivo real y mayor cantidad de productos?
+#### Pregunta #1: ¿Qué línea de producto genera el mayor volumen de efectivo real y vende mayor cantidad de productos?
 
 
 ```

@@ -65,13 +65,3 @@ from e_commerce_clean
 
 
 
-
-SELECT COUNT(*) 
-FROM e_commerce_clean
-WHERE order_id IS null;
-
-
-SELECT order_id,COUNT(*) 
-FROM e_commerce_clean
-GROUP BY order_id 
-HAVING COUNT(*)>1
