@@ -2,7 +2,7 @@
 
 # Proyecto SQL: análisis de ventas de un e-commerce
 ## Resumen (Overview)
-Un e-commerce busca mejorar su servicio y brindar un mejor servicio a sus clientes. Mi objetivo utilizar SQL Server Management Studio para analizar los datos para obtener recomendaciones para mejorar el servicio del e-commerce
+Un e-commerce busca mejorar su servicio y brindar un mejor servicio a sus clientes. Mi objetivo utilizar SQL Server Management Studio para analizar los datos para obtener recomendaciones para mejorar el servicio del e-commerce.
 
 
 ## Estructura del Proyecto
@@ -31,9 +31,8 @@ order_id: Un identificador único para cada pedido.
 ![Proyecto SQL](./picture/tabla_de_datos.jpeg)
 
 ## Tareas (Task)
-Desafío Analítico: Calcular el ingreso total y la cantidad total de productos vendidos por product_category.
 
-
+Rentabilidad por Categoría: ¿Qué línea de producto genera el mayor volumen de efectivo real?
 
 
 ## Limpieza de Datos
@@ -47,7 +46,9 @@ Se tiene que realizar limpieza de datos para que los datos esten limpios y listo
 
 ## Análisis Exploratorio de Datos (EDA) e Insights
 
-Calcular el ingreso total y la cantidad total de productos vendidos por product_category.
+Pregunta #1: ¿Qué línea de producto genera el mayor volumen de efectivo real y mayor cantidad de productos?
+
+
 ```
 SELECT 
     product_category,
@@ -58,6 +59,9 @@ GROUP BY product_category
 ORDER BY total_revenue DESC;
 
 ```
+
+![Proyecto SQL](./picture/pregunta%201.jpeg)
+
 
 ## Conclusion
 
