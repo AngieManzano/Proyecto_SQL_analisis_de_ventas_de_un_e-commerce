@@ -34,10 +34,10 @@ order_id: Un identificador único para cada pedido.
 ## Tareas (Task)
 
 1. Rentabilidad por Categoría: ¿Qué línea de producto genera el mayor volumen de efectivo real y vende mayor cantidad de productos?
-2. Clientes más activos: ¿Quienes son los 10 clientes que compran la mayor cantidad de productos?
-3.
-4.
-5.
+2. Popularidad de Métodos de Pago: ¿Cual es el metodo de pago más usado al realizar las compras?
+3. Evaluación de la Eficiencia Logística Regional: ¿Cual es el tiempo promedio de las entregas en cada region?
+4. Segmentación de Clientes por nivel de gasto: ¿Como se podria clasificar a los clientes en tres categorias (Platinum, Gold y Silver) en base a la cantidad de dinero que ponen cuando realizan sus compras?
+5. Clientes más activos: ¿Cuales son clientes que compran la mayor cantidad de productos?
 6.
 7.
 8.
@@ -77,6 +77,118 @@ ORDER BY total_revenue DESC;
 ```
 
 ![Proyecto SQL](./picture/pregunta%201.jpeg)
+
+#### Pregunta #2: ¿Cual es el metodo de pago más usado al realizar las compras?
+
+
+```
+SELECT 
+    payment_method, 
+    COUNT(order_id) AS transaction_count,
+    ROUND(AVG(revenue), 2) AS average_ticket
+FROM e_commerce_clean
+GROUP BY payment_method
+ORDER BY transaction_count desc;
+
+```
+
+#### Pregunta #3: ¿Cual es el tiempo promedio de las entregas en cada region?
+
+
+
+```
+SELECT 
+    region, 
+    AVG(delivery_days) AS avg_delivery_time
+FROM e_commerce_clean
+GROUP BY region
+ORDER BY avg_delivery_time DESC;
+
+```
+
+#### Pregunta #4: ¿Como se podria clasificar a los clientes en tres categorias (Platinum, Gold y Silver) en base a la cantidad de dinero que ponen cuando realizan sus compras?
+
+```
+SELECT 
+    customer_id, 
+    SUM(revenue) AS total_spent,
+    CASE 
+        WHEN SUM(revenue) > 3000 THEN 'Platinum'
+        WHEN SUM(revenue) BETWEEN 1500 AND 3000 THEN 'Gold'
+        ELSE 'Silver'
+    END AS customer_segment
+FROM e_commerce_clean
+GROUP BY customer_id;
+
+```
+#### Pregunta #5: ¿Cuales son clientes que compran la mayor cantidad de productos?
+
+
+
+
+```
+with mejores_clientes as (
+select TOP 10
+      sum([quantity]) as 'Productos_vendidos',
+      [customer_id] from [dbo].[e_commerce_clean]
+where [quantity]> 0
+group by [customer_id]
+order by sum([quantity]) desc
+)
+
+select * from mejores_clientes;
+
+
+```
+
+
+#### Pregunta #6:
+
+
+```
+
+
+
+```
+
+
+
+#### Pregunta #7:
+
+
+```
+
+
+```
+
+#### Pregunta #8:
+
+
+
+```
+
+
+```
+
+#### Pregunta #9:
+
+
+
+```
+
+
+
+```
+
+
+#### Pregunta #10:
+
+
+```
+
+
+
+```
 
 
 ## Conclusion

@@ -55,15 +55,107 @@ ORDER BY total_revenue DESC;
 ---
 
 
-select top 10*
+---gasto del cliente vs el gasto promedio de los clientes
+
+---Cuanto dinero ingresa a a empresa por medio de un cliente promedio comparado con el dinero que los clientes dan a la empresa para comprar sus productos
+
+select [customer_id]
+	,[revenue]
+	,avg([revenue]) over() gasto_promedio_clientes
+from [dbo].[e_commerce_clean]
+order by [revenue] desc
+;
+select avg ([revenue])
+from [dbo].[e_commerce_clean]
+
+
+---Eficiencia Logística: Tiempo de Entrega Promedio por Región
+
+
+
+
+SELECT 
+    region, 
+    AVG(delivery_days) AS avg_delivery_time
+FROM e_commerce_clean
+GROUP BY region
+ORDER BY avg_delivery_time DESC;
+
+
+
+
+---Popularidad de Métodos de Pago
+SELECT 
+    payment_method, 
+    COUNT(order_id) AS transaction_count,
+    ROUND(AVG(revenue), 2) AS average_ticket
+FROM e_commerce_clean
+GROUP BY payment_method
+ORDER BY transaction_count desc;
+
+
+
+---Segmentación de Clientes por Nivel de Gasto
+
+
+SELECT 
+    customer_id, 
+    SUM(revenue) AS total_spent,
+    CASE 
+        WHEN SUM(revenue) > 3000 THEN 'Platinum'
+        WHEN SUM(revenue) BETWEEN 1500 AND 3000 THEN 'Gold'
+        ELSE 'Silver'
+    END AS customer_segment
+FROM e_commerce_clean
+GROUP BY customer_id;
+
+----------Detección de Categorías con Alto Valor pero Baja Cantidad
+
+
+SELECT 
+    product_category, 
+    AVG(unit_price) AS avg_price,
+    SUM(quantity) AS total_units
+FROM e_commerce_clean
+GROUP BY product_category
+HAVING AVG(unit_price) > 300;
+
+
+
+---
+
+
+
+
+----
+
+
+
+
+
+select [customer_id]
+	,[revenue]
+from [dbo].[e_commerce_clean]
+where [revenue] between 1200 and 3000
+
+
+
+
+
+
+
+select*
+from[dbo].[e_commerce_clean]
+where   [order_date] '2025-01-01' and '2026-12-31'
+
+
+
+
+
+select top 5*
 FROM [dbo].[e_commerce_clean]
 order by  [revenue] desc
 ;
-
-
-
-
-
 
 
 
@@ -89,7 +181,7 @@ select *
 from e_commerce_clean
 
 SELECT COUNT(*) 
-FROM SuperStore
+FROM [dbo].[e_commerce_clean]
 WHERE order_id IS NULL;
 
 
@@ -137,7 +229,8 @@ select * from top_ganancia_producto
 
 
 
----Calcular el ingreso total y la cantidad total de productos vendidos por product_category.
+---Pregunta #1: ¿Qué línea de producto genera el mayor volumen de efectivo real y vende mayor cantidad de productos?
+
 SELECT 
     product_category,
     SUM(quantity) AS total_units_sold,
@@ -145,3 +238,19 @@ SELECT
 FROM e_commerce_clean
 GROUP BY product_category
 ORDER BY total_revenue DESC;
+
+
+
+
+
+with mejores_clientes as (
+select TOP 10
+      sum([quantity]) as 'Productos_vendidos',
+      [customer_id] from [dbo].[e_commerce_clean]
+where [quantity]> 0
+group by [customer_id]
+order by sum([quantity]) desc
+)
+
+select * from mejores_clientes;
+
