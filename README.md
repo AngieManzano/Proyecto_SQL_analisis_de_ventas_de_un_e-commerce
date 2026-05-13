@@ -121,6 +121,10 @@ FROM e_commerce_clean
 GROUP BY customer_id;
 
 ```
+![Proyecto SQL](./picture/pregunta%204.jpeg)
+
+
+
 #### Pregunta #5: ¿Cuales son clientes que compran la mayor cantidad de productos?
 
 
@@ -140,7 +144,7 @@ select * from mejores_clientes;
 
 
 ```
-
+![Proyecto SQL](./picture/pregunta%205.jpeg)
 
 #### Pregunta #6:
 
