@@ -15,8 +15,8 @@ Un e-commerce busca mejorar su servicio y brindar un mejor servicio a sus client
 Los datos originales con la información de cada columna se encuentra [aquí](https://www.kaggle.com/datasets/abbas829/e-commerce-sales-analytics-dataset?resource=download). 
 
 El conjunto de datos consta de 5.000 registros con las siguientes columnas:
-order_id: Un identificador único para cada pedido.
--Order_date: La fecha en que se realizó el pedido.
+- order_id: Un identificador único para cada pedido.
+- Order_date: La fecha en que se realizó el pedido.
 - Customer_id: Un identificador único para el cliente que realizó el pedido.
 - Product_category: La categoría del producto vendido (por ejemplo, Belleza, Ropa, Electrónica).
 - Region: La región geográfica donde se realizó el pedido (por ejemplo, Sur, Este, Oeste).
@@ -38,11 +38,11 @@ order_id: Un identificador único para cada pedido.
 3. Evaluación de la Eficiencia Logística Regional: ¿Cual es el tiempo promedio de las entregas en cada region?
 4. Segmentación de Clientes por nivel de gasto: ¿Como se podria clasificar a los clientes en tres categorias (Platinum, Gold y Silver) en base a la cantidad de dinero que ponen cuando realizan sus compras?
 5. Clientes más activos: ¿Cuales son clientes que compran la mayor cantidad de productos?
-6.
-7.
-8.
-9.
-10.
+6. 
+7. 
+8. 
+9. 
+10. 
 
 
 
@@ -53,11 +53,6 @@ Se tiene que realizar limpieza de datos para que los datos esten limpios y listo
 ![Proyecto SQL](./picture/limpia1.jpeg)
 
 ![Proyecto SQL](./picture/limpia2.jpeg)
-
-
-
-
-
 
 
 ## Análisis Exploratorio de Datos (EDA) e Insights
@@ -84,13 +79,14 @@ ORDER BY total_revenue DESC;
 ```
 SELECT 
     payment_method, 
-    COUNT(order_id) AS transaction_count,
-    ROUND(AVG(revenue), 2) AS average_ticket
+    COUNT(order_id) AS orden_id_count
 FROM e_commerce_clean
 GROUP BY payment_method
-ORDER BY transaction_count desc;
+ORDER BY orden_id_count desc;
 
 ```
+![Proyecto SQL](./picture/pregunta%202.3.jpeg) 
+
 
 #### Pregunta #3: ¿Cual es el tiempo promedio de las entregas en cada region?
 
@@ -105,6 +101,8 @@ GROUP BY region
 ORDER BY avg_delivery_time DESC;
 
 ```
+
+![Proyecto SQL](./picture/pregunta%203.jpeg)
 
 #### Pregunta #4: ¿Como se podria clasificar a los clientes en tres categorias (Platinum, Gold y Silver) en base a la cantidad de dinero que ponen cuando realizan sus compras?
 
@@ -128,8 +126,6 @@ GROUP BY customer_id;
 #### Pregunta #5: ¿Cuales son clientes que compran la mayor cantidad de productos?
 
 
-
-
 ```
 with mejores_clientes as (
 select TOP 10
@@ -140,7 +136,8 @@ group by [customer_id]
 order by sum([quantity]) desc
 )
 
-select * from mejores_clientes;
+select * 
+from mejores_clientes;
 
 
 ```

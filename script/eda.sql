@@ -93,7 +93,35 @@ FROM e_commerce_clean
 GROUP BY payment_method
 ORDER BY transaction_count desc;
 
+SELECT 
+    payment_method, 
+    COUNT(order_id) AS transaction_count,
+    ROUND(AVG(revenue), 2) AS average_ticket
+FROM e_commerce_clean
+GROUP BY payment_method
+ORDER BY transaction_count desc;
 
+
+
+
+
+
+SELECT 
+    payment_method, 
+    COUNT(order_id) AS transaction_count,
+    ROUND(AVG(revenue), 2) AS average_ticket
+FROM e_commerce_clean
+GROUP BY payment_method
+ORDER BY transaction_count desc;
+
+
+
+SELECT 
+    payment_method, 
+    COUNT(order_id) AS transaction_count
+FROM e_commerce_clean
+GROUP BY payment_method
+ORDER BY transaction_count desc;
 
 ---Segmentación de Clientes por Nivel de Gasto
 
@@ -139,6 +167,11 @@ from [dbo].[e_commerce_clean]
 where [revenue] between 1200 and 3000
 
 
+
+
+select [payment_method]
+	,[revenue]
+from [dbo].[e_commerce_clean];
 
 
 
@@ -253,4 +286,9 @@ order by sum([quantity]) desc
 )
 
 select * from mejores_clientes;
+
+
+
+
+
 
