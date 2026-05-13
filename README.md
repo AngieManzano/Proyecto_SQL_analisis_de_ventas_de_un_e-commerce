@@ -38,7 +38,7 @@ El conjunto de datos consta de 5.000 registros con las siguientes columnas:
 3. Evaluación de la Eficiencia Logística Regional: ¿Cual es el tiempo promedio de las entregas en cada region?
 4. Segmentación de Clientes por nivel de gasto: ¿Como se podria clasificar a los clientes en tres categorias (Platinum, Gold y Silver) en base a la cantidad de dinero que ponen cuando realizan sus compras?
 5. Clientes más activos: ¿Cuales son clientes que compran la mayor cantidad de productos?
-6. 
+6. Ranking de categoria estrella por Región: ¿Cual es la categoria que genera mayor ingreso en cada region?
 7. 
 8. 
 9. 
@@ -143,15 +143,27 @@ from mejores_clientes;
 ```
 ![Proyecto SQL](./picture/pregunta%205.jpeg)
 
-#### Pregunta #6:
+#### Pregunta #6: ¿Cual es la categoria que genera mayor ingreso en cada region?
 
 
 ```
-
+WITH RegionalRanking AS (
+    SELECT 
+        region,
+        product_category,
+        SUM(revenue) AS total_revenue,
+        RANK() OVER (PARTITION BY region ORDER BY SUM(revenue) DESC) as pos
+    FROM e_commerce_clean
+    GROUP BY region, product_category
+)
+SELECT region, product_category, total_revenue
+FROM RegionalRanking
+WHERE pos = 1
+ORDER BY total_revenue desc;
 
 
 ```
-
+![Proyecto SQL](./picture/pregunta%206.jpeg)
 
 
 #### Pregunta #7:
