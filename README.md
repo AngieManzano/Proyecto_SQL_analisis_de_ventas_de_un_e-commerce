@@ -112,6 +112,11 @@ ORDER BY avg_delivery_time DESC;
 
 ![Proyecto SQL](./picture/pregunta%203.jpeg)
 
+Se especifico el apartado de región y se determino el promedio de delivery_days, dicho promedio se nombró como avg_delivery_time. Ademas, con ORDER BY se ordeno de mayor a menor.
+Se consiguió identificar el promedio de South, North, East y West. 
+Esta información podría ayudar a la empresa para poder identificar el tiempo promedio de entrega a las regiones. Asimismo, basándose en el promedio actual podrían tomar medidas para reducir los días para lograr un promedio de entregas en menos días, logrando así una mayor eficiencia en las entregas a un largo plazo.
+
+
 #### Pregunta #4: ¿Cuál es el promedio de la clasificación del cliente en general?
 
 
@@ -123,6 +128,12 @@ FROM e_commerce_clean;
 ```
 
 ![Proyecto SQL](./picture/pregunta%204-cambio.jpeg)
+
+
+Para encontrar el promedio de customer_rating se utilizo AVG, el promedio se nombró como global_rating.
+El promedio de la clasificación del cliente en general es de 2.97398.
+El resultado muestra que la empresa no tiene una clasificación destacada, por lo cual la empresa puede usar esta información para priorizar mejorar el servicio para los clientes. 
+
 
 #### Pregunta #5: ¿Quiénes son clientes que compran la mayor cantidad de productos?
 
@@ -191,6 +202,13 @@ FROM e_commerce_clean);
 ```
 ![Proyecto SQL](./picture/pregunta%208.jpeg)
 
+
+
+
+
+
+
+
 #### Pregunta #9: ¿Cuál es el promedio de la clasificación de los clientes sobre cada categoría?
 
 
@@ -224,7 +242,7 @@ GROUP BY customer_id;
 
 
 ## Conclusión
-Este análisis nos ayuda a determinar puntos de mejora para el negocio en diferentes áreas, asimismo, se puede encontrar apartados donde el negocio esta sadisfaciendo las necesidades de los clientes. Con la información de los analisis se pueden tomar desciciones para mejorar la experiencia de los clientes y los prodcutos. 
+Este análisis nos ayuda a determinar puntos de mejora para el negocio en diferentes áreas, asimismo, se puede encontrar apartados donde el negocio esta sadisfaciendo las necesidades de los clientes. Con la información del análisis se pueden tomar desciciones para mejorar la experiencia de los clientes y los productos. 
 
 
 
