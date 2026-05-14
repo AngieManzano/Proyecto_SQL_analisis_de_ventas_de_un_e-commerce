@@ -22,26 +22,24 @@ HAVING COUNT(*) > 1;
 
 
 /*
-1. Pregunta #1: ¿Qué línea de producto genera el mayor volumen de efectivo real?
-2
-3.
-4.
-5.
-6.
-7.
-8.
-9.
-10.
-
-
-cuales son las caterias qe venden mas?
-cuales son las regiones que venden mas
-cual es el metodo de pago mas usado en las compreas
+1. Rentabilidad por Categoría: ¿Qué línea de producto genera el mayor volumen de efectivo real y vende mayor cantidad de productos?
+2. Popularidad de Métodos de Pago: ¿Cuál es el método de pago más usado al realizar las compras?
+3. Evaluación de la Eficiencia Logística Regional: ¿Cuál es el tiempo promedio de las entregas en cada región?
+4. Ranking de Satisfacción General: ¿Cuál es el promedio de la clasificación del cliente en general?
+5. Clientes más activos: ¿Quiénes son clientes que compran la mayor cantidad de productos?
+6. Ranking de categoría estrella por Región: ¿Cuál es la categoría que genera mayor ingreso en cada región?
+7. Identificación de Clientes con Ratings Críticos: ¿Quiénes son los clientes que calificaron con un puntaje bajo a los productos? 
+8. Detección de Anomalías Logísticas: ¿Cuáles son los pedidos que tardaron el doble del promedio de su región?
+9. Categorías con Mejor Calificación: ¿Cuál es el promedio de la clasificación de los clientes sobre cada categoría?
+10. Segmentación de Clientes por nivel de gasto: ¿Cómo se podría clasificar a los clientes en tres categorías (Platinum, Gold y Silver) en base a la cantidad de dinero que ponen cuando realizan sus compras?
 
 
 */
 
---- Pregunta #1: ¿Qué línea de producto genera el mayor volumen de efectivo real y vende mayor cantidad de productos?
+
+
+---- Pregunta #1: ¿Qué línea de producto genera el mayor volumen de efectivo real y vende mayor cantidad de productos?
+
 
 SELECT 
     product_category,
@@ -52,25 +50,22 @@ GROUP BY product_category
 ORDER BY total_revenue DESC;
 
 
----
 
 
----gasto del cliente vs el gasto promedio de los clientes
 
----Cuanto dinero ingresa a a empresa por medio de un cliente promedio comparado con el dinero que los clientes dan a la empresa para comprar sus productos
+---- Pregunta #2: ¿Cuál es el método de pago más usado al realizar las compras?
 
-select [customer_id]
-	,[revenue]
-	,avg([revenue]) over() gasto_promedio_clientes
-from [dbo].[e_commerce_clean]
-order by [revenue] desc
-;
-select avg ([revenue])
-from [dbo].[e_commerce_clean]
+SELECT 
+    payment_method, 
+    COUNT(order_id) AS transaction_count
+FROM e_commerce_clean
+GROUP BY payment_method
+ORDER BY transaction_count desc;
 
 
----Eficiencia Logística: Tiempo de Entrega Promedio por Región
 
+
+---- Pregunta #3: ¿Cuál es el tiempo promedio de las entregas en cada región?
 
 
 
@@ -84,196 +79,17 @@ ORDER BY avg_delivery_time DESC;
 
 
 
----Popularidad de Métodos de Pago
-SELECT 
-    payment_method, 
-    COUNT(order_id) AS transaction_count,
-    ROUND(AVG(revenue), 2) AS average_ticket
-FROM e_commerce_clean
-GROUP BY payment_method
-ORDER BY transaction_count desc;
+---- Pregunta #4: ¿Cuál es el promedio de la clasificación del cliente en general?
 
-SELECT 
-    payment_method, 
-    COUNT(order_id) AS transaction_count,
-    ROUND(AVG(revenue), 2) AS average_ticket
-FROM e_commerce_clean
-GROUP BY payment_method
-ORDER BY transaction_count desc;
 
 
+SELECT AVG(customer_rating) AS global_rating
+FROM e_commerce_clean;
 
 
 
 
-SELECT 
-    payment_method, 
-    COUNT(order_id) AS transaction_count,
-    ROUND(AVG(revenue), 2) AS average_ticket
-FROM e_commerce_clean
-GROUP BY payment_method
-ORDER BY transaction_count desc;
-
-
-
-SELECT 
-    payment_method, 
-    COUNT(order_id) AS transaction_count
-FROM e_commerce_clean
-GROUP BY payment_method
-ORDER BY transaction_count desc;
-
----Segmentación de Clientes por Nivel de Gasto
-
-
-SELECT 
-    customer_id, 
-    SUM(revenue) AS total_spent,
-    CASE 
-        WHEN SUM(revenue) > 3000 THEN 'Platinum'
-        WHEN SUM(revenue) BETWEEN 1500 AND 3000 THEN 'Gold'
-        ELSE 'Silver'
-    END AS customer_segment
-FROM e_commerce_clean
-GROUP BY customer_id;
-
-----------Detección de Categorías con Alto Valor pero Baja Cantidad
-
-
-SELECT 
-    product_category, 
-    AVG(unit_price) AS avg_price,
-    SUM(quantity) AS total_units
-FROM e_commerce_clean
-GROUP BY product_category
-HAVING AVG(unit_price) > 300;
-
-
-
----
-
-
-
-
-----
-
-
-
-
-
-select [customer_id]
-	,[revenue]
-from [dbo].[e_commerce_clean]
-where [revenue] between 1200 and 3000
-
-
-
-
-select [payment_method]
-	,[revenue]
-from [dbo].[e_commerce_clean];
-
-
-
-
-
-select*
-from[dbo].[e_commerce_clean]
-where   [order_date] '2025-01-01' and '2026-12-31'
-
-
-
-
-
-select top 5*
-FROM [dbo].[e_commerce_clean]
-order by  [revenue] desc
-;
-
-
-
-
-
-SELECT 
-    product_category,
-    SUM(revenue) AS total_revenue,
-    ROUND(AVG(discount), 2) AS avg_discount
-FROM e_commerce_clean
-
-GROUP BY product_category
-ORDER BY total_revenue DESC;
-
-
-
-
-
-
-
-
-select *
-from e_commerce_clean
-
-SELECT COUNT(*) 
-FROM [dbo].[e_commerce_clean]
-WHERE order_id IS NULL;
-
-
-
-
-
-
-
-
---- cual es los orden id que con mayor venta
-
-SELECT TOP 3*
-FROM [dbo].[e_commerce_clean]
-order by [total_sales] desc;
-
----¿Qué clientes compran la mayor cantidad de productos?
-
-
-with mejores_vendedores as (
-select TOP 3
-      sum(quantity) as 'Productos_vendidos',
-      customer_name from basetotal
-where quantity > 0
-group by customer_name
-order by sum(quantity) desc
-)
-
-select * from mejores_vendedores;
-
-
-
-
-
-------¿Cuáles son los productos que generan mayor ganancia por año?
-
-with top_ganancia_producto as (
-select top 10
-year,product_name,format(sum(profit),'N2') as 'total_ganancia'
-from basetotal
-group by year,product_name
-order by sum(profit) desc
-)
-select * from top_ganancia_producto
-
-
-
-
----Pregunta #1: ¿Qué línea de producto genera el mayor volumen de efectivo real y vende mayor cantidad de productos?
-
-SELECT 
-    product_category,
-    SUM(quantity) AS total_units_sold,
-    SUM(revenue) AS total_revenue
-FROM e_commerce_clean
-GROUP BY product_category
-ORDER BY total_revenue DESC;
-
-
-
+---- Pregunta #5: ¿Quiénes son clientes que compran la mayor cantidad de productos?
 
 
 with mejores_clientes as (
@@ -285,46 +101,14 @@ group by [customer_id]
 order by sum([quantity]) desc
 )
 
-select * from mejores_clientes;
+select * 
+from mejores_clientes;
 
 
 
+---- Pregunta #6: ¿Cuál es la categoría que genera mayor ingreso en cada región?
 
 
-SELECT 
-    region, 
-    product_category, 
-    SUM(revenue) AS total_rev,
-    RANK() OVER (PARTITION BY region ORDER BY SUM(revenue) DESC) AS regional_rank
-FROM e_commerce_clean
-GROUP BY region, product_category;
-
-
-
-
-
-
-WITH customer_stats AS (
-    SELECT 
-        customer_id,
-        COUNT(order_id) AS total_orders,
-        SUM(revenue) AS lifetime_value,
-        MIN(order_date) AS first_order,
-        MAX(order_date) AS last_order
-    FROM e_commerce_clean
-    GROUP BY customer_id
-)
-SELECT *,
-    (lifetime_value / total_orders) AS avg_order_value
-FROM customer_stats
-WHERE total_orders > 1
-ORDER BY lifetime_value DESC;
-
-
-
-
-
----Ranking de Productos Estrella por Región
 WITH RegionalRanking AS (
     SELECT 
         region,
@@ -341,60 +125,45 @@ ORDER BY total_revenue desc;
 
 
 
+---- Pregunta #7: ¿Quiénes son los clientes que calificaron con un puntaje bajo a los productos? 
 
-
-
-
-SELECT product_category, AVG(customer_rating) as avg_rating
+SELECT order_id, customer_id, customer_rating
 FROM e_commerce_clean
-GROUP BY 1
-HAVING AVG(customer_rating) < 1.0;
-
-
-
-SELECT * FROM (
-  SELECT *, AVG(delivery_days) OVER(PARTITION BY region) as reg_avg
-  FROM e_commerce_clean
-) t WHERE delivery_days > reg_avg;
-
-
-
-
-
-
-
-SELECT order_id, product_category, customer_rating 
-FROM e_commerce_clean 
 WHERE customer_rating < 2.0;
 
 
+---- Pregunta #8:  ¿Cuáles son los pedidos que tardaron el doble del promedio de su región? 
 
 
-
-
-SELECT product_category, AVG(customer_rating) as avg_rating
+SELECT order_id, region, delivery_days,
+AVG(delivery_days) OVER(PARTITION BY region) AS regional_avg
 FROM e_commerce_clean
-GROUP BY 1
-HAVING AVG(customer_rating) < 3.0;
+WHERE delivery_days > (SELECT AVG(delivery_days) * 2
+FROM e_commerce_clean);
+
+
+---- Pregunta #9: ¿Cuál es el promedio de la clasificación de los clientes sobre cada categoría?
+
+
+SELECT product_category, ROUND(AVG(customer_rating), 2) AS avg_rating
+FROM e_commerce_clean
+GROUP BY product_category
+ORDER BY avg_rating DESC;
+
+
+---- Pregunta #10: Segmentación de Clientes por nivel de gasto: ¿Cómo se podría clasificar a los clientes en tres categorías (Platinum, Gold y Silver) en base a la cantidad de dinero que ponen cuando realizan sus compras?
+
+```
+SELECT 
+    customer_id, 
+    SUM(revenue) AS total_spent,
+    CASE 
+        WHEN SUM(revenue) > 3000 THEN 'Platinum'
+        WHEN SUM(revenue) BETWEEN 1500 AND 3000 THEN 'Gold'
+        ELSE 'Silver'
+    END AS customer_segment
+FROM e_commerce_clean
+GROUP BY customer_id;
 
 
 
-
-
-
-
-
-
-
-
-SELECT SUM(revenue) as actual_rev,
-SUM(revenue / (1 - discount)) as theoretical_rev
-FROM e_commerce_clean;
-
-
-WITH RankedSales AS (
-  SELECT region, product_category, SUM(revenue) as total_rev,
-  RANK() OVER(PARTITION BY region ORDER BY SUM(revenue) DESC) as rnk
-  FROM e_commerce_clean GROUP BY 1, 2
-)
-SELECT * FROM RankedSales WHERE rnk = 1;

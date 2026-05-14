@@ -34,15 +34,15 @@ El conjunto de datos consta de 5.000 registros con las siguientes columnas:
 ## Tareas (Task)
 
 1. Rentabilidad por Categoría: ¿Qué línea de producto genera el mayor volumen de efectivo real y vende mayor cantidad de productos?
-2. Popularidad de Métodos de Pago: ¿Cual es el metodo de pago más usado al realizar las compras?
-3. Evaluación de la Eficiencia Logística Regional: ¿Cual es el tiempo promedio de las entregas en cada region?
-4. Segmentación de Clientes por nivel de gasto: ¿Como se podria clasificar a los clientes en tres categorias (Platinum, Gold y Silver) en base a la cantidad de dinero que ponen cuando realizan sus compras?
-5. Clientes más activos: ¿Cuales son clientes que compran la mayor cantidad de productos?
-6. Ranking de categoria estrella por Región: ¿Cual es la categoria que genera mayor ingreso en cada region?
-7. 
-8. 
-9. 
-10. 
+2. Popularidad de Métodos de Pago: ¿Cuál es el método de pago más usado al realizar las compras?
+3. Evaluación de la Eficiencia Logística Regional: ¿Cuál es el tiempo promedio de las entregas en cada región?
+4. Ranking de Satisfacción General: ¿Cuál es el promedio de la clasificación del cliente en general?
+5. Clientes más activos: ¿Quiénes son clientes que compran la mayor cantidad de productos?
+6. Ranking de categoría estrella por Región: ¿Cuál es la categoría que genera mayor ingreso en cada región?
+7. Identificación de Clientes con Ratings Críticos: ¿Quiénes son los clientes que calificaron con un puntaje bajo a los productos? 
+8. Detección de Anomalías Logísticas: ¿Cuáles son los pedidos que tardaron el doble del promedio de su región?
+9. Categorías con Mejor Calificación: ¿Cuál es el promedio de la clasificación de los clientes sobre cada categoría?
+10. Segmentación de Clientes por nivel de gasto: ¿Cómo se podría clasificar a los clientes en tres categorías (Platinum, Gold y Silver) en base a la cantidad de dinero que ponen cuando realizan sus compras?
 
 
 
@@ -73,22 +73,22 @@ ORDER BY total_revenue DESC;
 
 ![Proyecto SQL](./picture/pregunta%201.jpeg)
 
-#### Pregunta #2: ¿Cual es el metodo de pago más usado al realizar las compras?
+#### Pregunta #2: ¿Cuál es el método de pago más usado al realizar las compras?
 
 
 ```
 SELECT 
     payment_method, 
-    COUNT(order_id) AS orden_id_count
+    COUNT(order_id) AS transaction_count
 FROM e_commerce_clean
 GROUP BY payment_method
-ORDER BY orden_id_count desc;
+ORDER BY transaction_count desc;
 
 ```
-![Proyecto SQL](./picture/pregunta%202.3.jpeg) 
+![Proyecto SQL](./picture/pregunta%202.5.jpeg) 
 
 
-#### Pregunta #3: ¿Cual es el tiempo promedio de las entregas en cada region?
+#### Pregunta #3: ¿Cuál es el tiempo promedio de las entregas en cada región?
 
 
 
@@ -104,26 +104,19 @@ ORDER BY avg_delivery_time DESC;
 
 ![Proyecto SQL](./picture/pregunta%203.jpeg)
 
-#### Pregunta #4: ¿Como se podria clasificar a los clientes en tres categorias (Platinum, Gold y Silver) en base a la cantidad de dinero que ponen cuando realizan sus compras?
+#### Pregunta #4: ¿Cuál es el promedio de la clasificación del cliente en general?
+
 
 ```
-SELECT 
-    customer_id, 
-    SUM(revenue) AS total_spent,
-    CASE 
-        WHEN SUM(revenue) > 3000 THEN 'Platinum'
-        WHEN SUM(revenue) BETWEEN 1500 AND 3000 THEN 'Gold'
-        ELSE 'Silver'
-    END AS customer_segment
-FROM e_commerce_clean
-GROUP BY customer_id;
+SELECT AVG(customer_rating) AS global_rating
+FROM e_commerce_clean;
+
 
 ```
-![Proyecto SQL](./picture/pregunta%204.jpeg)
 
+![Proyecto SQL](./picture/pregunta%204-cambio.jpeg)
 
-
-#### Pregunta #5: ¿Cuales son clientes que compran la mayor cantidad de productos?
+#### Pregunta #5: ¿Quiénes son clientes que compran la mayor cantidad de productos?
 
 
 ```
@@ -143,7 +136,7 @@ from mejores_clientes;
 ```
 ![Proyecto SQL](./picture/pregunta%205.jpeg)
 
-#### Pregunta #6: ¿Cual es la categoria que genera mayor ingreso en cada region?
+#### Pregunta #6: ¿Cuál es la categoría que genera mayor ingreso en cada región?
 
 
 ```
@@ -166,45 +159,64 @@ ORDER BY total_revenue desc;
 ![Proyecto SQL](./picture/pregunta%206.jpeg)
 
 
-#### Pregunta #7:
+#### Pregunta #7: ¿Quiénes son los clientes que calificaron con un puntaje bajo a los productos? 
+
+```
+SELECT order_id, customer_id, customer_rating
+FROM e_commerce_clean
+WHERE customer_rating < 2.0;
 
 
 ```
+![Proyecto SQL](./picture/pregunta7-cambio.jpeg)
+
+#### Pregunta #8:  ¿Cuáles son los pedidos que tardaron el doble del promedio de su región?
 
 
 ```
+SELECT order_id, region, delivery_days,
+AVG(delivery_days) OVER(PARTITION BY region) AS regional_avg
+FROM e_commerce_clean
+WHERE delivery_days > (SELECT AVG(delivery_days) * 2
+FROM e_commerce_clean);
 
-#### Pregunta #8:
+```
+![Proyecto SQL](./picture/pregunta%208.jpeg)
 
+#### Pregunta #9: ¿Cuál es el promedio de la clasificación de los clientes sobre cada categoría?
 
 
 ```
-
-
-```
-
-#### Pregunta #9:
-
-
-
-```
-
-
-
-```
-
-
-#### Pregunta #10:
-
-
-```
+SELECT product_category, ROUND(AVG(customer_rating), 2) AS avg_rating
+FROM e_commerce_clean
+GROUP BY product_category
+ORDER BY avg_rating DESC;
 
 
 
 ```
+![Proyecto SQL](./picture/pregunta%209.jpeg)
+
+#### Pregunta #10: Segmentación de Clientes por nivel de gasto: ¿Cómo se podría clasificar a los clientes en tres categorías (Platinum, Gold y Silver) en base a la cantidad de dinero que ponen cuando realizan sus compras?
+
+```
+SELECT 
+    customer_id, 
+    SUM(revenue) AS total_spent,
+    CASE 
+        WHEN SUM(revenue) > 3000 THEN 'Platinum'
+        WHEN SUM(revenue) BETWEEN 1500 AND 3000 THEN 'Gold'
+        ELSE 'Silver'
+    END AS customer_segment
+FROM e_commerce_clean
+GROUP BY customer_id;
+
+```
+![Proyecto SQL](./picture/pregunta%204.jpeg)
 
 
-## Conclusion
+## Conclusión
+Este análisis nos ayuda a determinar puntos de mejora para el negocio en diferentes áreas, asimismo, se puede encontrar apartados donde el negocio esta sadisfaciendo las necesidades de los clientes. Con la información de los analisis se pueden tomar desciciones para mejorar la experiencia de los clientes y los prodcutos. 
 
 
 
