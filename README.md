@@ -57,7 +57,7 @@ Se tiene que realizar limpieza de datos para que los datos esten limpios y listo
 
 ## Análisis Exploratorio de Datos (EDA) e Insights
 
-#### Pregunta #1: ¿Qué línea de producto genera el mayor volumen de efectivo real y vende mayor cantidad de productos?
+#### Pregunta #1: ¿Qué línea de producto genera el mayor volumen de efectivo real y que vende mayor cantidad de productos?
 
 
 ```
@@ -70,6 +70,10 @@ GROUP BY product_category
 ORDER BY total_revenue DESC;
 
 ```
+Se identifico las categorías de productos, luego se realizo una suma total de quantity y revenue de cada categoría. Con el objetivo de obtener la cantidad total del efectivo y el total de artículos comprados en cada categoría. 
+Se pudo encontrar que la categoría que genera el mayor volumen de efectivo real y que vende mayor cantidad de productos es Electronics. 
+La empresa podría priorizar y ampliar el catálogo la categoría Electronics.
+
 
 ![Proyecto SQL](./picture/pregunta%201.jpeg)
 
@@ -86,6 +90,10 @@ ORDER BY transaction_count desc;
 
 ```
 ![Proyecto SQL](./picture/pregunta%202.5.jpeg) 
+
+Para realizar compras la tienda cuenta con diversos métodos de pago, para saber cual es el más usado, se realizó un conteo de orden_id para obtener transaction_count.
+El método de pago más usado al realizar compras es mediante tarjeta (card).
+Con esta información la empresa podría mantener el método de pago en la tienda, asimismo podría mejorar la experiencia de compra mediante tarjeta.
 
 
 #### Pregunta #3: ¿Cuál es el tiempo promedio de las entregas en cada región?
