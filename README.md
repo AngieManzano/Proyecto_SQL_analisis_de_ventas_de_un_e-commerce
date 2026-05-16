@@ -264,7 +264,7 @@ GROUP BY customer_id;
 ```
 ![Proyecto SQL](./picture/pregunta%204.jpeg)
 
-Se realiza la suma de revenue y se crean 3 categorias que se diferencian dependiendo de la cantidad de dinero. Platinum es cuando el monto es mayor a 3000, Gold es cuando el monto esta entre 1500 y 3000, finanalmente Silver vendría a ser el resto.  Ademas, se identifica cual seria el monto de cada customer_id. 
+Se realiza la suma de revenue y se crean 3 categorias que se diferencian dependiendo de la cantidad de dinero. Platinum es cuando el monto es mayor a 3000, Gold es cuando el monto esta entre 1500 y 3000, y Silver vendría a ser el resto.  Además, se identifica cual seria el monto de cada customer_id. 
 La empresa mediante esta clasificación puede ofrecer promociones a los clientes dependiendo de su categoría, Platinum al ser el más alto residiría mejores promociones. 
 
 
