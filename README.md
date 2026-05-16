@@ -15,7 +15,7 @@ Un e-commerce busca mejorar su servicio y brindar un mejor servicio a sus client
 Los datos originales con la información de cada columna se encuentra [aquí](https://www.kaggle.com/datasets/abbas829/e-commerce-sales-analytics-dataset?resource=download). 
 
 El conjunto de datos consta de 5.000 registros con las siguientes columnas:
-- order_id: Un identificador único para cada pedido.
+- Order_id: Un identificador único para cada pedido.
 - Order_date: La fecha en que se realizó el pedido.
 - Customer_id: Un identificador único para el cliente que realizó el pedido.
 - Product_category: La categoría del producto vendido (por ejemplo, Belleza, Ropa, Electrónica).
@@ -135,7 +135,7 @@ El promedio de la clasificación del cliente en general es de 2.97398.
 El resultado muestra que la empresa no tiene una clasificación destacada, por lo cual la empresa puede usar esta información para priorizar mejorar el servicio para los clientes. 
 
 
-#### Pregunta #5: ¿Quiénes son clientes que compran la mayor cantidad de productos?
+#### Pregunta #5: ¿Quiénes son los 10 clientes que compran la mayor cantidad de productos?
 
 
 ```
@@ -150,10 +150,14 @@ order by sum([quantity]) desc
 
 select * 
 from mejores_clientes;
-
-
 ```
 ![Proyecto SQL](./picture/pregunta%205.jpeg)
+
+Customer_id sirve para identificar al cliente, se realizó una suma en el apartado de quantity para saber cuántos productos fueron comprados por cada cliente. Se uso Top 10 para identificar a los 10 clientes que compran más productos. 
+Se pudo encontrar a los 10 clientes que compraron mayor cantidad de productos, identificándolos con el customer_id estos clientes tienen los números 1663, 1957, 1675, 1935, 1276, 1038, 1267, 1496, 1775 y 1117.
+Con esta información la empresa puede brindar un descuento especial o algún cupón a los clientes que realizan más compras. Con el objetivo de fidelizar a los clientes y siga prefiriendo comprar en la tienda oline. 
+
+
 
 #### Pregunta #6: ¿Cuál es la categoría que genera mayor ingreso en cada región?
 
@@ -178,16 +182,27 @@ ORDER BY total_revenue desc;
 ![Proyecto SQL](./picture/pregunta%206.jpeg)
 
 
+Se realizo una suma de los ingresos de cada región y luego se encontró cual es la categoría mas vendida en cada una. Luego se ordeno de mayor a menor.
+Se descubrió que la categoría que genera mayor ingreso en cada región es la categoría de electrónicos. 
+Por lo cual, la empresa podría priorizar y ofrecer más productos de la categoría de electrónicos al ser la categoría mas popular en todas las regiones.
+
+
+
+
 #### Pregunta #7: ¿Quiénes son los clientes que calificaron con un puntaje bajo a los productos? 
 
 ```
 SELECT order_id, customer_id, customer_rating
 FROM e_commerce_clean
 WHERE customer_rating < 2.0;
-
-
 ```
 ![Proyecto SQL](./picture/pregunta7-cambio.jpeg)
+
+
+Para identificar los clientes se usa el customer_id, para identificar el pedido está el orden_id y para identificar la clasificación del cliente esta el customer_rating. En where se dio la especificación de que en el apartado de customer_rating se muestren las clasificaciones menores a 2, los cuales serían clasificaciones bajas.
+Se encontró que pedidos y que clientes clasificaron con un bajo puntaje a los productos.
+La empresa podría comunicarse con los clientes para buscar una respuesta en concreta sobre la razón de la clasificación para de esa forma mejorar para futuros pedidos.
+
 
 #### Pregunta #8:  ¿Cuáles son los pedidos que tardaron el doble del promedio de su región?
 
@@ -203,6 +218,8 @@ FROM e_commerce_clean);
 ![Proyecto SQL](./picture/pregunta%208.jpeg)
 
 
+Se determino el promedio de delivery_days en cada region y en where se multiplico con 2 el promedio de delivery_days. Con el objetivo que en la tabla se muestren los pedidos que tardaron el doble del promedio su región. 
+Se descubrió que no hay ningún pedido que tardara el doble del promedio de su región. Por lo cual se puede concluir que la empresa no cuenta con tardanza excesiva en sus pedidos. Se puede determinar que la empresa no tiene problemas respecto a la entrega de sus pedidos. La empresa podría asegurar a sus clientes que los pedidos no demoraran muchos días en su entrega, lo que generaría confianza en los clientes al saber que el pedido llegara siempre en un tiempo moderado. 
 
 
 
@@ -223,7 +240,14 @@ ORDER BY avg_rating DESC;
 ```
 ![Proyecto SQL](./picture/pregunta%209.jpeg)
 
-#### Pregunta #10: Segmentación de Clientes por nivel de gasto: ¿Cómo se podría clasificar a los clientes en tres categorías (Platinum, Gold y Silver) en base a la cantidad de dinero que ponen cuando realizan sus compras?
+En select se puso product_category, saco un promedio de customer_rating y con orden by se ordeno de mayor a menor. Se encontro que el promedio de clasificaciones de cada categoría dando como resultado que Clothing tenga 3.01, Beauty tenga 3.01, Electronics tenga 2.95 y Home tenga 2.94.
+Los resultados muestran que en cada categoría los clientes no dan una alta clasificación, por lo cual la empresa podría tomar medidas como preguntar a los clientes al respecto y encontrar la razón por la cual las clasificaciones no son muy altas. Al encontrar el problema, la empresa podría resolverlo y de esa manera las clasificaciones por parte de los clientes podrían ser mucho mas altas. 
+
+
+
+
+
+#### Pregunta #10: ¿Cómo se podría clasificar a los clientes en tres categorías (Platinum, Gold y Silver) en base a la cantidad de dinero que ponen cuando realizan sus compras?
 
 ```
 SELECT 
@@ -240,9 +264,14 @@ GROUP BY customer_id;
 ```
 ![Proyecto SQL](./picture/pregunta%204.jpeg)
 
+Se realiza la suma de revenue y se crean 3 categorias que se diferencian dependiendo de la cantidad de dinero. Platinum es cuando el monto es mayor a 3000, Gold es cuando el monto esta entre 1500 y 3000, finanalmente Silver vendría a ser el resto.  Ademas, se identifica cual seria el monto de cada customer_id. 
+La empresa mediante esta clasificación puede ofrecer promociones a los clientes dependiendo de su categoría, Platinum al ser el más alto residiría mejores promociones. 
+
+
+
 
 ## Conclusión
-Este análisis nos ayuda a determinar puntos de mejora para el negocio en diferentes áreas, asimismo, se puede encontrar apartados donde el negocio esta sadisfaciendo las necesidades de los clientes. Con la información del análisis se pueden tomar desciciones para mejorar la experiencia de los clientes y los productos. 
+Este análisis nos ayuda a determinar puntos de mejora para el negocio en diferentes áreas, asimismo, se puede encontrar apartados donde el negocio este satisfaciendo las necesidades de los clientes. Con la información del análisis se pueden tomar decisiones para mejorar la experiencia de los clientes y los productos.
 
 
 
