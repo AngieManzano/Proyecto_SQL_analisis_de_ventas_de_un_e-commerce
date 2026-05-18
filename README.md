@@ -39,7 +39,7 @@ El conjunto de datos consta de 5.000 registros con las siguientes columnas:
 4. Ranking de satisfacción general: ¿Cuál es el promedio de la clasificación del cliente en general?
 5. Clientes más activos: ¿Quiénes son clientes que compran la mayor cantidad de productos?
 6. Ranking de categoría estrella por región: ¿Cuál es la categoría que genera mayor ingreso en cada región?
-7. Identificación de clientes con ratings Críticos: ¿Quiénes son los clientes que calificaron con un puntaje bajo a los productos? 
+7. Identificación de clientes con ratings críticos: ¿Quiénes son los clientes que calificaron con un puntaje bajo a los productos? 
 8. Detección de anomalías logísticas: ¿Cuáles son los pedidos que tardaron el doble del promedio de su región?
 9. Categorías con mejor calificación: ¿Cuál es el promedio de la clasificación de los clientes sobre cada categoría?
 10. Segmentación de clientes por nivel de gasto: ¿Cómo se podría clasificar a los clientes en tres categorías (Platinum, Gold y Silver) en base a la cantidad de dinero que ponen cuando realizan sus compras?
@@ -278,7 +278,7 @@ El grupo de clientes que realizan compras que generan mayores ingresos a la empr
 El tiempo promedio de las entregas por región, no excede los 7 días. Además, no hay ningún pedido que tarde el doble del promedio de cada región. El tiempo de entregas no cuenta con una excesiva tardanza en sus entregas. 
 #### Rentabilidad por categoría: 
 La categoría de Electronics genera mayor ingreso a la empresa.La empresa podría agregar más productos y mantener en constante restablecimiento el stock de esta categoría al ser la más popular.
-#### Ranking de calificación general: 
+#### Calificación general: 
 La calificación otorgada por el cliente al pedido es un promedio de 2.97, la empresa debería mejorar en este apartado para que en un futuro pueda obtener una calificación destacada.
 
 
